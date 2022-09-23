@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "_id": "8b86ae5b-a9a8-42b4-b17e-50f684370ccb",
+    "colId": "1af2c8aa-a507-4bbf-8519-07f5c5b615d1",
+    "containerId": "",
+    "name": "all products",
+    "url": "http://localhost:3000/products",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2022-09-23T22:02:56.787Z",
+    "modified": "2022-09-23T22:02:56.787Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "05b52776-057b-492a-b3fa-c119e2df9511",
+    "colId": "1af2c8aa-a507-4bbf-8519-07f5c5b615d1",
+    "containerId": "",
+    "name": "products by id",
+    "url": "http://localhost:3000/products/2",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-09-23T22:03:57.241Z",
+    "modified": "2022-09-23T23:37:10.063Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]
