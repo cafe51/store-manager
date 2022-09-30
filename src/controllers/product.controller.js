@@ -22,7 +22,16 @@ const showProductById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const insertProductController = async (req, res) => {
+  const obj = req.body;
+  await productService.insertProductService(obj);
+  const allProducts = await productService.getAllProducts();
+  const result = allProducts[allProducts.length - 1];
+  return res.status(201).json(result);
+};
+
 module.exports = {
   showAllProducts,
   showProductById,
+  insertProductController,
 };
