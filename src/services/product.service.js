@@ -1,5 +1,6 @@
 const { productModel } = require('../models');
 const errorMap = require('../utils/errorMap');
+const { validateInputProduct } = require('./validations');
 
 const getAllProducts = async () => {
   // try {
@@ -23,8 +24,10 @@ const getProductById = async (id) => {
 };
 
 const insertProductService = async (obj) => {
-  const result = await productModel.insertProductModel(obj);
-  return result;
+  const { type, message } = validateInputProduct(obj);
+  if (type) return { type, message };
+  await productModel.insertProductModel(obj);
+  return { type, message };
 };
 
 module.exports = {
