@@ -2,15 +2,17 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const connection = require('../../../src/models/connection');
-const { productModel } = require('../../../src/models/index');
+const { productModel } = require('../../../src/models/');
 
-const productsMock = require('../models/mocks/products.model.mocks');
+const productsMock = require('../../mocks/products.model.mocks');
 
 // queryAllProducts
 // queryProductById
 
 describe('testando o SELECT do model', function () {
-  afterEach(sinon.restore);
+  afterEach(function () {
+    sinon.restore();
+  });
   // console.log(productsMock);
   it('retorna todos produtos', async function () {
     sinon.stub(connection, 'execute').resolves([productsMock]);
