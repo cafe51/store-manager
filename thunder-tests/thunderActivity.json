@@ -36,9 +36,14 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2022-09-30T20:58:13.641Z",
-    "modified": "2022-09-30T20:58:13.691Z",
+    "modified": "2022-10-01T19:53:22.365Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"teste\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

@@ -30,6 +30,9 @@ const insertProductModel = async (obj) => {
     'INSERT INTO StoreManager.products (name) VALUE (?)',
     [`${obj.name}`],
   );
+  // const [result] = await connection.execute(
+  //   'SELECT * FROM products ORDER BY id',
+  // );
   return insert;
 };
 

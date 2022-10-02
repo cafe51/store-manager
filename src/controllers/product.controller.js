@@ -26,9 +26,9 @@ const insertProductController = async (req, res) => {
   const obj = req.body;
   const { type, message } = await productService.insertProductService(obj);
   if (type) return res.status(type).json({ message });
-  const allProducts = await productService.getAllProducts();
-  const result = allProducts[allProducts.length - 1];
-  return res.status(201).json(result);
+  // const allProducts = await productService.getAllProducts();
+  // const result = allProducts[allProducts.length - 1];
+  return res.status(201).json(message);
 };
 
 module.exports = {

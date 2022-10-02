@@ -4,25 +4,19 @@ const sinonChai = require("sinon-chai");
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { productModel } = require('../../../src/models/');
 const { productService } = require('../../../src/services/');
-// getAllProducts
-// getProductById
 const { productControler } = require('../../../src/controllers/');
-// showAllProducts
-// showProductById
-
-const productsMock = require('../../mocks/products.model.mocks');
+const { productsMock } = require('../../mocks/products.model.mocks');
 
 
 describe('testando a camada controller', function () {
   afterEach(function () {
     sinon.restore();
   });
-  // console.log(productsMock);
   it('retorna todos produtos', async function () {
     const res = {};
     const req = {};
+
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
@@ -39,6 +33,7 @@ describe('testando a camada controller', function () {
   it('retorna produto por id', async function () {
     const res = {};
     const req = { params: { id: 1 }, body: {} };;
+
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
@@ -54,7 +49,7 @@ describe('testando a camada controller', function () {
 
   it('retorna erro caso id não exista', async function () {
     const res = {};
-    const req = { params: { id: 99 }, body: {} };;
+    const req = { params: { id: 99 }, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
@@ -62,9 +57,46 @@ describe('testando a camada controller', function () {
       .resolves({ type: 404, message: 'Product not found' });
 
     await productControler.showProductById(req, res);
+
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
 
 });
 
+describe('testando o INSERT do controler', function () {
+  afterEach( async () => {
+    await sinon.restore();
+  });
+
+  it('insere um produto', async function () {
+
+    const res = {};
+    const req = {};
+    
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    
+    sinon.stub(productService, 'insertProductService').resolves({ type: null });
+    
+    await productControler.insertProductController(req, res);
+    
+    expect(res.status).to.have.been.calledWith(201);
+  });
+
+
+  it('insere um produto', async function () {
+
+    const res = {};
+    const req = {};
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productService, 'insertProductService').resolves({ type: 400 });
+
+    await productControler.insertProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(400);
+  });
+});

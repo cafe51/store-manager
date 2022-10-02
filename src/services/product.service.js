@@ -27,7 +27,9 @@ const insertProductService = async (obj) => {
   const { type, message } = validateInputProduct(obj);
   if (type) return { type, message };
   await productModel.insertProductModel(obj);
-  return { type, message };
+  const allProducts = await productModel.queryAllProducts();
+  const lastProduct = allProducts[allProducts.length - 1];
+  return { type, message: lastProduct };
 };
 
 module.exports = {
