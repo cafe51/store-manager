@@ -1,5 +1,5 @@
 const express = require('express');
-const { productRoutes } = require('./routers');
+const { productRoutes, salesRoutes } = require('./routers');
 
 const app = express();
 app.use(express.json());
@@ -13,5 +13,7 @@ app.get('/', (_request, response) => {
 // você deve usar o arquivo server.js para executar sua aplicação 
 
 app.use('/products', productRoutes);
+
+app.use('/sales', salesRoutes);
 
 module.exports = app;
