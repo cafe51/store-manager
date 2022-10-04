@@ -15,11 +15,11 @@ const verifyMissingProperties = (arrayOfProducts) => {
   for (let i = 0; i < arrayOfProducts.length; i += 1) {
     const missingProductId = '"productId" is required';
     const missingQuantity = '"quantity" is required';
-    // const wrongQuantity = '"quantity" must be greater than or equal to 1';
     const { productId, quantity } = arrayOfProducts[i];
     if (!productId) return { type: errorMap.mapError('BAD_REQUEST'), message: missingProductId };
-    if (quantity === undefined) return { type: errorMap.mapError('BAD_REQUEST'), message: missingQuantity };
-    // if (quantity < 1) return { type: errorMap.mapError('INVALID_DATA'), message: wrongQuantity };
+    if (quantity === undefined) {
+      return { type: errorMap.mapError('BAD_REQUEST'), message: missingQuantity };
+    } 
   }
   return 'ok';
 };
@@ -48,7 +48,6 @@ const validateInputSale = (arrayOfProducts, allProducts) => {
   if (wrongQuantity.type) return wrongQuantity;
   const doProductExist = verifyProductExists(arrayOfProducts, allProducts);
   if (doProductExist.type) return doProductExist;
-  // console.log('AAAAAAAAAAAA doProductExist type', doProductExist.type, 'doProductExist', doProductExist);
   return { type: null, message: 'ok' };
 };
 

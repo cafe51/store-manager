@@ -26,7 +26,6 @@ const insertSales = async (salesId, productId, quantity) => {
     'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUE (?, ?, ?)',
     [`${salesId}`, `${productId}`, `${quantity}`],
   );
-  // console.log('AAAAAAAAA', insertId);
   return insertId;
 };
 
@@ -67,35 +66,3 @@ module.exports = {
   insertSalesModel,
   queryAllSalesModel,
 };
-
-// const arrayOfObjects = [
-//   { productId: 1, quantity: 2 },
-//   { productId: 2, quantity: 3 },
-//   { productId: 3, quantity: 4 },
-// ];
-
-// const newArrayOfObjectsWithNewProperty = arrayOfObjects.map((product, index) => {
-//   const newProduct = product;
-//   newProduct.salesId = index;
-//   return product;
-// });
-
-// console.log(newArrayOfObjectsWithNewProperty);
-
-// const arraydeprodutos = [
-//     { productId: 1, quantity: 2 },
-//     { productId: 2, quantity: 3 },
-//     { productId: 3, quantity: 4 },
-// ];
-
-// const novoarray = arraydeprodutos.push({ productId: 1, quantity: 2 });
-
-// const arraydeprodutos = [
-//   1,
-//   2,
-//   3,
-// ];
-
-// const novoarray = arraydeprodutos.map((x) => x + 1);
-  
-// console.log('ANTIGO ARRAY', arraydeprodutos, 'NOVO ARRAY', novoarray);
