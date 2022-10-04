@@ -8,7 +8,7 @@
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-09-23T22:02:56.787Z",
-    "modified": "2022-09-23T22:02:56.787Z",
+    "modified": "2022-10-04T01:43:24.367Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -42,6 +42,39 @@
     "body": {
       "type": "json",
       "raw": "{\n  \"name\": \"novo produto\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "21a976d7-c53e-4899-911c-03178566e2f8",
+    "colId": "1af2c8aa-a507-4bbf-8519-07f5c5b615d1",
+    "containerId": "",
+    "name": "sales",
+    "url": "http://localhost:3000/sales",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-10-02T18:55:53.395Z",
+    "modified": "2022-10-02T18:55:53.395Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "cae3ce73-99c5-48a8-8ec1-6b04faaabd95",
+    "colId": "1af2c8aa-a507-4bbf-8519-07f5c5b615d1",
+    "containerId": "",
+    "name": "http://localhost:3000/novas vendas",
+    "url": "http://localhost:3000/sales",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-10-02T18:56:47.835Z",
+    "modified": "2022-10-04T20:45:03.595Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 2\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 2\n  }\n]",
       "form": []
     },
     "tests": []

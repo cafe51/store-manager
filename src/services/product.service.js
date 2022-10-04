@@ -24,6 +24,7 @@ const getProductById = async (id) => {
 };
 
 const insertProductService = async (obj) => {
+  // const allProducts = await productModel.queryAllProducts();
   const { type, message } = validateInputProduct(obj);
   if (type) return { type, message };
   await productModel.insertProductModel(obj);

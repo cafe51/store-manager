@@ -55,7 +55,40 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-02T18:51:13.937Z",
-    "modified": "2022-10-02T18:52:09.807Z",
+    "modified": "2022-10-02T18:55:34.358Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "583fc533-c290-4f50-8c63-e016d515dc08",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/sales",
+    "url": "http://localhost:3000/sales",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-10-02T18:56:29.104Z",
+    "modified": "2022-10-03T00:44:24.727Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 1\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  }\n]",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "50bf4a91-726b-4ac4-9633-fce46ac63863",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/br/br-c0001-e000544-r.json",
+    "url": "https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/br/br-c0001-e000544-r.json",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-10-03T04:33:00.849Z",
+    "modified": "2022-10-03T04:33:01.307Z",
     "headers": [],
     "params": [],
     "tests": []
