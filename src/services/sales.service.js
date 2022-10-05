@@ -1,6 +1,6 @@
 const { forEach } = require('p-iteration');
 const { productModel, salesModel } = require('../models');
-const errorMap = require('../utils/errorMap');
+// const errorMap = require('../utils/errorMap');
 const { validateInputSale } = require('./validations.sales');
 
 const getAllSalesService = async () => {
@@ -9,18 +9,18 @@ const getAllSalesService = async () => {
   return result;
 };
 
-const queryAllSalesWithProductsService = async () => {
-  const result = await salesModel.queryAllSalesWithProductsModel();
-  return result;
-};
+// const queryAllSalesWithProductsService = async () => {
+//   const result = await salesModel.queryAllSalesWithProductsModel();
+//   return result;
+// };
 
-const getSalesByIdService = async (id) => {
-  const result = await salesModel.getSalesByIdModel(id);
-  if (result.length === 0) {
-    return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Sale not found' };
-  }
-  return { type: null, message: result };
-};
+// const getSalesByIdService = async (id) => {
+//   const result = await salesModel.getSalesByIdModel(id);
+//   if (result.length === 0) {
+//     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Sale not found' };
+//   }
+//   return { type: null, message: result };
+// };
 
 const newArrayOfProducts = (arrayOfProducts, totalSales) => {
   const newArray = arrayOfProducts.map((product) => {
@@ -62,6 +62,6 @@ const insertSalesService = async (arrayOfProducts) => {
 module.exports = {
   insertSalesService,
   getAllSalesService,
-  queryAllSalesWithProductsService,
-  getSalesByIdService,
+  // queryAllSalesWithProductsService,
+  // getSalesByIdService,
 };
