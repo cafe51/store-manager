@@ -78,5 +78,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "7d8977ee-6c20-47f9-a526-a2e6cb1ed733",
+    "colId": "1af2c8aa-a507-4bbf-8519-07f5c5b615d1",
+    "containerId": "",
+    "name": "sales por ID",
+    "url": "http://localhost:3000/sales/1",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2022-10-05T06:21:50.963Z",
+    "modified": "2022-10-05T06:25:04.122Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
