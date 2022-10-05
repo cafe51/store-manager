@@ -7,7 +7,7 @@ const { productModel } = require('../../../src/models/');
 const { productsMock, newProductListMock } = require('../../mocks/products.model.mocks');
 
 describe('testando o SELECT do model', function () {
-  afterEach(async function () {
+  afterEach(async () => {
     await sinon.restore();
   });
   it('retorna todos produtos', async function () {
@@ -31,8 +31,8 @@ describe('testando o SELECT do model', function () {
 
 
 describe('testando o INSERT do model', function () {
-  afterEach(function () {
-    sinon.restore();
+  afterEach(async () => {
+    await sinon.restore();
   });
 
   it('insere um produto', async function () {
@@ -45,3 +45,17 @@ describe('testando o INSERT do model', function () {
   });
 });
 
+describe('testando o UPDATE do model', function () {
+  afterEach(async () => {
+    await sinon.restore();
+  });
+
+  it('atualiza um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([{ update: 42 }]);
+
+    const objeto = { name: 'teste' };
+    const result = await productModel.updateProductModel(42, objeto);
+
+    expect(result).to.equal(42);
+  });
+});

@@ -37,9 +37,17 @@ const updateProductService = async (id, obj) => {
   return { type, message: objClone };
 };
 
+const deleteProductService = async (id) => {
+  const { type, message } = await getProductById(id);
+  if (type) return { type, message };
+  await productModel.deleteProductModel(id);
+  return { type, message: { id } };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   insertProductService,
   updateProductService,
+  deleteProductService,
 };

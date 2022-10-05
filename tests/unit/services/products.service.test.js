@@ -22,6 +22,7 @@ describe('testando a o GET camada service', function () {
   });
 
   it('retorna produto por id', async function () {
+    await sinon.stub(productModel, 'queryProductById').resolves(productsMock[0]);
     const result = await productService.getProductById(1);
 
     expect(result.type).to.be.equal(null);

@@ -38,6 +38,8 @@ describe('testando a camada controller', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
 
+    sinon.stub(productModel, 'queryProductById').resolves(productsMock[0]);
+
     await productControler.showProductById(req, res);
 
     expect(res.status).to.have.been.calledWith(200);
@@ -94,5 +96,35 @@ describe('testando o INSERT do controler', function () {
 
     expect(res.status).to.have.been.calledWith(400);
     expect(res.json).to.have.been.calledWith({ message: "\"name\" is required" });
+  });
+});
+
+describe('testando o UPDATE do controler', function () {
+  afterEach( async () => {
+    await sinon.restore();
+  });
+
+  it('atualiza um produto', async function () {
+
+    const productMockClone = JSON.parse(JSON.stringify(productsMock));
+
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productMockClone.map((product) => {
+      if (product.id === 1) {
+        return { ...product, name: "Mascara do super-homem" };
+      }
+      return product;
+    }));
+
+    const res = {};
+    const req = { params: { id: 1 }, body: { name: "Mascara do super-homem" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await productControler.updateProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({ id: 1, name: 'Mascara do super-homem' });
+
   });
 });
