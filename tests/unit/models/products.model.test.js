@@ -2,27 +2,27 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const connection = require('../../../src/models/connection');
-const { productModel } = require('../../../src/models');
+const { productModel } = require('../../../src/models/');
 
 const { productsMock, newProductListMock } = require('../../mocks/products.model.mocks');
 
 describe('testando o SELECT do model', function () {
-  afterEach(function () {
-    sinon.restore();
+  afterEach(async function () {
+    await sinon.restore();
   });
   it('retorna todos produtos', async function () {
     sinon.stub(connection, 'execute').resolves([productsMock]);
 
     const result = await productModel.queryAllProducts();
     
-    expect(result).to.equal(productsMock);
+    expect(result).to.be.deep.equal(productsMock);
   });
 
   it('retorna produto por id', async function () {
-    sinon.stub(connection, 'execute').resolves([productsMock[0]]);
+    sinon.stub(connection, 'execute').resolves([[productsMock[0]]]);
 
     const result = await productModel.queryProductById(1);
-
+    
     expect(result).to.be.deep.equal(productsMock[0]);
 
   });

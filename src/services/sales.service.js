@@ -1,7 +1,7 @@
 const { forEach } = require('p-iteration');
 const { productModel, salesModel } = require('../models');
 // const errorMap = require('../utils/errorMap');
-const { validateInputSale } = require('./validations');
+const { validateInputSale } = require('./validations.sales');
 
 const getAllSalesService = async () => {
   const result = await salesModel.queryAllSalesModel();

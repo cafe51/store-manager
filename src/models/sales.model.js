@@ -1,10 +1,11 @@
+const camelize = require('camelize');
 const connection = require('./connection');
 
 const queryAllSalesModel = async () => {
   const [result] = await connection.execute(
     'SELECT * FROM StoreManager.sales ORDER BY id',
   );
-  return result;
+  return camelize(result);
 };
 
 const insertDate = async () => {

@@ -36,12 +36,12 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2022-09-30T20:59:17.861Z",
-    "modified": "2022-09-30T21:00:13.905Z",
+    "modified": "2022-10-05T05:00:53.309Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"novo produto\"\n}",
+      "raw": "{\n  \"name\": \"Mascara do super-homem\"\n}",
       "form": []
     },
     "tests": []

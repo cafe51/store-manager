@@ -4,14 +4,18 @@ const sinonChai = require("sinon-chai");
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { productService } = require('../../../src/services');
+const { productModel } = require('../../../src/models/');
 const { productControler } = require('../../../src/controllers');
 const { productsMock } = require('../../mocks/products.model.mocks');
 
 
 describe('testando a camada controller', function () {
-  afterEach(function () {
-    sinon.restore();
+  beforeEach(async function () {
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productsMock);
+  });
+
+  afterEach(async function () {
+    await sinon.restore();
   });
   it('retorna todos produtos', async function () {
     const res = {};
@@ -19,9 +23,6 @@ describe('testando a camada controller', function () {
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon
-      .stub(productService, 'getAllProducts')
-      .resolves(productsMock);
 
     await productControler.showAllProducts(req, res);
 
@@ -36,9 +37,6 @@ describe('testando a camada controller', function () {
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon
-      .stub(productService, 'getProductById')
-      .resolves({type: null, message: productsMock[0]});
 
     await productControler.showProductById(req, res);
 
@@ -52,9 +50,6 @@ describe('testando a camada controller', function () {
     const req = { params: { id: 99 }, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon
-      .stub(productService, 'getProductById')
-      .resolves({ type: 404, message: 'Product not found' });
 
     await productControler.showProductById(req, res);
 
@@ -71,32 +66,37 @@ describe('testando o INSERT do controler', function () {
 
   it('insere um produto', async function () {
 
+    await sinon.stub(productModel, 'queryAllProducts').resolves([...productsMock, { id: 4, name: "Mascara do super-homem" }]);
+
+    // await sinon.stub(productService, 'getAllProducts').resolves(productsMock);
+
     const res = {};
-    const req = {};
+    const req = { body: { name: "Mascara do super-homem" } };
+    
+    console.log('AAAAAAAAAAAAAAAA', productsMock)
     
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    
-    sinon.stub(productService, 'insertProductService').resolves({ type: null });
     
     await productControler.insertProductController(req, res);
     
     expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith({ id: 4, name: 'Mascara do super-homem' });
+    
   });
 
 
-  it('insere um produto', async function () {
+  it('insere um produto com o campo vazio', async function () {
 
     const res = {};
-    const req = {};
+    const req = {body: {}};
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
 
-    sinon.stub(productService, 'insertProductService').resolves({ type: 400 });
-
     await productControler.insertProductController(req, res);
 
     expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ message: "\"name\" is required" });
   });
 });

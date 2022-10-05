@@ -14,11 +14,9 @@ const getAllSalesController = async (req, res) => {
 
 const insertSalesController = async (req, res) => {
   const array = req.body;
-  // const { type, message } = await salesService.insertSalesService(obj);
   const { type, message } = await salesService.insertSalesService(array);
+  
   if (type) return res.status(type).json({ message });
-  // const allProducts = await productService.getAllProducts();
-  // const result = allProducts[allProducts.length - 1];
   return res.status(201).json(message);
 };
 

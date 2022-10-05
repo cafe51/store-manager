@@ -9,6 +9,51 @@ const newSaleMock = [
   }
 ]
 
+const newSaleMockMissingProductIdInTheBank = [
+  {
+    "productId": 1,
+    "quantity": 1
+  },
+  {
+    "productId": 42,
+    "quantity": 5
+  }
+]
+
+
+const newSaleMockMissingProductIdPropertie = [
+  {
+    "productIdO": 1,
+    "quantity": 1
+  },
+  {
+    "productId": 2,
+    "quantity": 5
+  }
+]
+
+const newSaleMockMissingQuantityPropertie = [
+  {
+    "productId": 1,
+    "quantities": 1
+  },
+  {
+    "productId": 2,
+    "quantity": 5
+  }
+]
+
+const newSaleMockWrongQuantity = [
+  {
+    "productId": 1,
+    "quantity": 1
+  },
+  {
+    "productId": 2,
+    "quantity": 0
+  }
+]
+
 const saleResponseControllerMock = {
   "id": 3,
   "itemsSold": [
@@ -31,10 +76,6 @@ const salesListMock = [
   {
     "id": 2,
     "date": "2022-10-04T21:27:02.000Z"
-  },
-  {
-    "id": 3,
-    "date": "2022-10-04T21:27:02.000Z"
   }
 ]
 
@@ -43,4 +84,8 @@ module.exports = {
   newSaleMock,
   saleResponseControllerMock,
   salesListMock,
+  newSaleMockMissingProductIdInTheBank,
+  newSaleMockMissingProductIdPropertie,
+  newSaleMockMissingQuantityPropertie,
+  newSaleMockWrongQuantity,
 };

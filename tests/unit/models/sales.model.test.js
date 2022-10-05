@@ -15,22 +15,29 @@ describe('testando o SELECT do model', function () {
 
     const result = await salesModel.queryAllSalesModel();
 
-    expect(result).to.equal(salesListMock);
+    expect(result).to.deep.equal(salesListMock);
   });
 
-  describe('testando o INSERT do model', function () {
-    afterEach(function () {
-      sinon.restore();
-    });
+});
 
-    it('insere um produto', async function () {
-      // sinon.stub()
-      sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
-
-      const result = await salesModel.insertSalesModel(newSaleMock);
-      console.log('AAAAAAAAA', result)
-      expect(result).to.equal(42);
-    });
+describe('testando o INSERT do model', function () {
+  afterEach(function () {
+    sinon.restore();
   });
 
+  it('insere os produtos vendidos', async function () {
+    // sinon.stub()
+    sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
+
+    const result = await salesModel.insertSales(newSaleMock);
+    expect(result).to.equal(42);
+  });
+
+  it('insere a venda', async function () {
+    // sinon.stub()
+    sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
+
+    const result = await salesModel.insertDate(newSaleMock);
+    expect(result).to.equal(42);
+  });
 });

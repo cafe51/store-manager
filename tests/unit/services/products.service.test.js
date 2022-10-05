@@ -4,23 +4,24 @@ const sinon = require('sinon');
 const { productModel } = require('../../../src/models/');
 const { productService } = require('../../../src/services/');
 
-const productsMock = require('../../mocks/products.model.mocks');
+const { productsMock } = require('../../mocks/products.model.mocks');
 
-describe('testando a camada service', function () {
-  afterEach(function () {
-    sinon.restore();
+describe('testando a o GET camada service', function () {
+
+  beforeEach(async () => {
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productsMock);
+  });
+
+  afterEach(async function () {
+    await sinon.restore();
   });
   it('retorna todos produtos', async function () {
-    sinon.stub(productModel, 'queryAllProducts').resolves(productsMock);
-
     const result = await productService.getAllProducts();
 
     expect(result).to.equal(productsMock);
   });
 
   it('retorna produto por id', async function () {
-    sinon.stub(productModel, 'queryProductById').resolves([productsMock[0]]);
-
     const result = await productService.getProductById(1);
 
     expect(result.type).to.be.equal(null);
@@ -29,9 +30,7 @@ describe('testando a camada service', function () {
   });
 
   it('retorna erro caso id não exista', async function () {
-    sinon.stub(productModel, 'queryProductById').resolves([]);
-
-    const result = await productService.getProductById(1);
+    const result = await productService.getProductById(42);
     
     expect(result.type).to.be.equal(404);
     expect(result.message).to.be.equal('Product not found');

@@ -1,6 +1,6 @@
 const { productModel } = require('../models');
 const errorMap = require('../utils/errorMap');
-const { validateInputProduct } = require('./validations');
+const { validateInputProduct } = require('./validations.product');
 
 const getAllProducts = async () => {
   // try {
@@ -15,12 +15,21 @@ const getAllProducts = async () => {
   return result;
 };
 
+// const getProductById = async (id) => {
+//   const result = await productModel.queryProductById(id);
+//     if (result.length === 0) {
+//     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Product not found' };
+//   }
+//   return { type: null, message: result[0] };
+// };
+
 const getProductById = async (id) => {
   const result = await productModel.queryProductById(id);
-    if (result.length === 0) {
+  console.log('MESAAAAGE', result);
+  if (!result) {
     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Product not found' };
   }
-  return { type: null, message: result[0] };
+  return { type: null, message: result };
 };
 
 const insertProductService = async (obj) => {
