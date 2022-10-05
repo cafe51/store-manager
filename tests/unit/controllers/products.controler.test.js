@@ -33,12 +33,10 @@ describe('testando a camada controller', function () {
 
   it('retorna produto por id', async function () {
     const res = {};
-    const req = { params: { id: 1 }, body: {} };;
+    const req = { params: { id: 1 }, body: {} };
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-
-    sinon.stub(productModel, 'queryProductById').resolves(productsMock[0]);
 
     await productControler.showProductById(req, res);
 
@@ -69,7 +67,7 @@ describe('testando o INSERT do controler', function () {
   it('insere um produto', async function () {
 
     await sinon.stub(productModel, 'queryAllProducts').resolves([...productsMock, { id: 4, name: "Mascara do super-homem" }]);
-
+    await sinon.stub(productModel, 'insertProductModel').resolves(42);
     const res = {};
     const req = { body: { name: "Mascara do super-homem" } };
     
@@ -108,12 +106,8 @@ describe('testando o UPDATE do controler', function () {
 
     const productMockClone = JSON.parse(JSON.stringify(productsMock));
 
-    await sinon.stub(productModel, 'queryAllProducts').resolves(productMockClone.map((product) => {
-      if (product.id === 1) {
-        return { ...product, name: "Mascara do super-homem" };
-      }
-      return product;
-    }));
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productMockClone);
+    await sinon.stub(productModel, 'updateProductModel').resolves(42);
 
     const res = {};
     const req = { params: { id: 1 }, body: { name: "Mascara do super-homem" } };
@@ -127,4 +121,92 @@ describe('testando o UPDATE do controler', function () {
     expect(res.json).to.have.been.calledWith({ id: 1, name: 'Mascara do super-homem' });
 
   });
+
+  it('atualiza um produto com nome cujo numero de caracteres seja menor que 5', async function () {
+
+    const productMockClone = JSON.parse(JSON.stringify(productsMock));
+
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productMockClone);
+    await sinon.stub(productModel, 'updateProductModel').resolves(42);
+
+    const res = {};
+    const req = { params: { id: 1 }, body: { name: "aaa" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await productControler.updateProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
+
+  });
+
+  it('atualiza um produto que não tem no banco de dados e retorna erro', async function () {
+
+    const productMockClone = JSON.parse(JSON.stringify(productsMock));
+
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productMockClone);
+    await sinon.stub(productModel, 'updateProductModel').resolves(42);
+
+    const res = {};
+    const req = { params: { id: 99 }, body: { name: "Mascara do super-homem" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await productControler.updateProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({message: 'Product not found'});
+
+  });
+
 });
+
+describe('testando o DELETE do controler', function () {
+  beforeEach(async () => {
+    await sinon.stub(productModel, 'queryAllProducts').resolves(productsMock);
+  });
+
+  afterEach(async () => {
+    await sinon.restore();
+  });
+
+  it('deleta um produto', async function () {
+
+    // const productMockClone = JSON.parse(JSON.stringify(productsMock));
+
+    
+    await sinon.stub(productModel, 'deleteProductModel').resolves([{ result: 1 }]);
+
+    const res = {};
+    const req = { params: { id: 1 }, body: { name: "Mascara do super-homem" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await productControler.deleteProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith('');
+
+  });
+  it('erro ao tentar deletar um produto que não existe', async function () {
+
+    // const productMockClone = JSON.parse(JSON.stringify(productsMock));
+
+    const res = {};
+    const req = { params: { id: 99 }, body: { name: "Mascara do super-homem" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await productControler.deleteProductController(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+
+  });
+});
+

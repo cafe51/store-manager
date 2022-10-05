@@ -21,9 +21,9 @@ describe('testando o SELECT do model', function () {
   it('retorna produto por id', async function () {
     sinon.stub(connection, 'execute').resolves([[productsMock[0]]]);
 
-    const result = await productModel.queryProductById(1);
+    const result = await productModel.queryAllProducts();
     
-    expect(result).to.be.deep.equal(productsMock[0]);
+    expect(result).to.be.deep.equal([productsMock[0]]);
 
   });
 
@@ -55,6 +55,20 @@ describe('testando o UPDATE do model', function () {
 
     const objeto = { name: 'teste' };
     const result = await productModel.updateProductModel(42, objeto);
+
+    expect(result).to.equal(42);
+  });
+});
+
+describe('testando o DELETE do model', function () {
+  afterEach(async () => {
+    await sinon.restore();
+  });
+
+  it('deleta um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([{ result: 42 }]);
+
+    const result = await productModel.deleteProductModel(42);
 
     expect(result).to.equal(42);
   });

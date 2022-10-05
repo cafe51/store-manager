@@ -139,5 +139,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "6ae756b9-286f-4549-9419-8435d299d131",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/sales/1",
+    "url": "http://localhost:3000/sales/1",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-10-05T20:24:13.373Z",
+    "modified": "2022-10-05T20:25:38.277Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

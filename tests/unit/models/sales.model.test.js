@@ -7,8 +7,8 @@ const { salesModel} = require('../../../src/models');
 const { salesListMock, newSaleMock, responseOfGetAllSalesWithProductsMock, responseOfGetSalesByIdMock } = require('../../mocks/sales.model.mock');
 
 describe('testando o SELECT do model', function () {
-  afterEach(function () {
-    sinon.restore();
+  afterEach(async () => {
+    await sinon.restore();
   });
   it('retorna todas as vendas', async function () {
     sinon.stub(connection, 'execute').resolves([salesListMock]);
@@ -30,7 +30,7 @@ describe('testando o SELECT do model', function () {
   it('retorna uma venda por id', async function () {
     sinon.stub(connection, 'execute').resolves([responseOfGetSalesByIdMock]);
 
-    const result = await salesModel.getSalesByIdModel(1);
+    const result = await salesModel.queryAllSalesWithProductsModel();
 
     expect(result).to.deep.equal(responseOfGetSalesByIdMock);
   });
@@ -38,10 +38,9 @@ describe('testando o SELECT do model', function () {
 });
 
 describe('testando o INSERT do model', function () {
-  afterEach(function () {
-    sinon.restore();
+  afterEach(async () => {
+    await sinon.restore();
   });
-
   it('insere os produtos vendidos', async function () {
     // sinon.stub()
     sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
@@ -55,6 +54,18 @@ describe('testando o INSERT do model', function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
 
     const result = await salesModel.insertDate(newSaleMock);
+    expect(result).to.equal(42);
+  });
+});
+
+describe('testando o DELETE do model', function () {
+  afterEach(async () => {
+    await sinon.restore();
+  });
+  it('deleta uma venda', async function () {
+    sinon.stub(connection, 'execute').resolves([42]);
+
+    const result = await salesModel.deleteSalesModel(1);
     expect(result).to.equal(42);
   });
 });

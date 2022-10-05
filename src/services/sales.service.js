@@ -15,11 +15,22 @@ const queryAllSalesWithProductsService = async () => {
 };
 
 const getSalesByIdService = async (id) => {
-  const result = await salesModel.getSalesByIdModel(id);
-  if (result.length === 0) {
+  const result = await salesModel.queryAllSalesWithProductsModel();
+
+  const product = result.filter((item) => item.saleId === Number(id));
+  
+  if (product.length === 0) {
     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Sale not found' };
   }
-  return { type: null, message: result };
+
+  const productClone = JSON.parse(JSON.stringify(product));
+
+  const productResponse = productClone.map((item) => {
+    const { date, productId, quantity } = item;
+    return { date, productId, quantity };
+  });
+
+  return { type: null, message: productResponse };
 };
 
 const newArrayOfProducts = (arrayOfProducts, totalSales) => {
@@ -60,8 +71,8 @@ const insertSalesService = async (arrayOfProducts) => {
 };
 
 const deleteSalesService = async (id) => {
-  const result = await salesModel.getSalesByIdModel(id);
-  if (result.length === 0) {
+  const result = await getSalesByIdService(id);
+  if (result.type) {
     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Sale not found' };
   }
   await salesModel.deleteSalesModel(id);

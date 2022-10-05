@@ -8,12 +8,25 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  const result = await productModel.queryProductById(id);
-  if (!result) {
+  // const result = await productModel.queryProductById(id);
+  const result = await productModel.queryAllProducts();
+  const product = result.find((item) => item.id === Number(id));
+  if (!product) {
     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Product not found' };
   }
-  return { type: null, message: result };
+  return { type: null, message: product };
 };
+
+// const listaDeObjetosComId = [
+//   { id: 1, name: 'teste1' },
+//   { id: 2, name: 'teste2' },
+//   { id: 3, name: 'teste3' },
+//   { id: 4, name: 'teste4' },
+// ];
+
+// const product = listaDeObjetosComId.find((item) => item.id === Number(7));
+
+// console.log(product);
 
 const insertProductService = async (obj) => {
   const { type, message } = validateInputProduct(obj);

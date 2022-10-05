@@ -8,13 +8,13 @@ const queryAllProducts = async () => {
   return camelize(result);
 };
 
-const queryProductById = async (id) => {
-  const [[result]] = await connection.execute(
-    'SELECT * FROM products WHERE id = ? ORDER BY id',
-    [id],
-  );
-  return camelize(result);
-};
+// const queryProductById = async (id) => {
+//   const [[result]] = await connection.execute(
+//     'SELECT * FROM products WHERE id = ? ORDER BY id',
+//     [id],
+//   );
+//   return camelize(result);
+// };
 
 const insertProductModel = async (obj) => {
   const [{ insert }] = await connection.execute(
@@ -42,7 +42,7 @@ const deleteProductModel = async (id) => {
 
 module.exports = {
   queryAllProducts,
-  queryProductById,
+  // queryProductById,
   insertProductModel,
   updateProductModel,
   deleteProductModel,

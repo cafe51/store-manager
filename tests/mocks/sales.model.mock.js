@@ -81,12 +81,12 @@ const salesListMock = [
 
 const responseOfGetSalesByIdMock = [
   {
-    "date": "2022-10-05T06:24:41.000Z",
+    "date": "2022-10-05T06:09:21.000Z",
     "productId": 1,
     "quantity": 5
   },
   {
-    "date": "2022-10-05T06:24:41.000Z",
+    "date": "2022-10-05T06:09:21.000Z",
     "productId": 2,
     "quantity": 10
   }
