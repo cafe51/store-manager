@@ -31,7 +31,6 @@ const newProductListMock = [
     "name": "Máscara do super-homem"
   }
 ]
-  
 
 module.exports = {
   productsMock,

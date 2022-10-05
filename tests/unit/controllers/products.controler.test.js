@@ -4,8 +4,8 @@ const sinonChai = require("sinon-chai");
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { productService } = require('../../../src/services/');
-const { productControler } = require('../../../src/controllers/');
+const { productService } = require('../../../src/services');
+const { productControler } = require('../../../src/controllers');
 const { productsMock } = require('../../mocks/products.model.mocks');
 
 

@@ -1,5 +1,5 @@
+const { forEach } = require('p-iteration');
 const { productModel, salesModel } = require('../models');
-// const { salesModel } = require('../models');
 // const errorMap = require('../utils/errorMap');
 const { validateInputSale } = require('./validations');
 
@@ -17,14 +17,35 @@ const getAllSalesService = async () => {
 //   return { type: null, message: result[0] };
 // };
 
+const newArrayOfProducts = (arrayOfProducts, totalSales) => {
+  const newArray = arrayOfProducts.map((product) => {
+    const newProduct = product;
+    newProduct.salesId = totalSales[totalSales.length - 1].id + 1;
+    return product;
+  });
+  return newArray;
+};
+
 const insertSalesService = async (arrayOfProducts) => {
-  const allSales = await salesModel.queryAllSalesModel();
   const allProducts = await productModel.queryAllProducts();
   const { type, message } = validateInputSale(arrayOfProducts, allProducts);
   if (type) return { type, message };
-  const [reqCopy] = await salesModel.insertSalesModel(arrayOfProducts);
-  // const allProducts = await salesModel.queryAllProducts();
-  // const lastProduct = allProducts[allProducts.length - 1];
+
+  const reqCopy = JSON.parse(JSON.stringify(arrayOfProducts)); // deep copy do array pra retornar pro controller
+
+  const allSales = await salesModel.queryAllSalesModel();
+  const productsWithSalesId = newArrayOfProducts(arrayOfProducts, allSales); // novo array com salesId
+
+  await salesModel.insertDate(); // insere a data da venda na tabela de vendas
+
+  await (async function insertLoop() {
+    await forEach(productsWithSalesId, async (product) => {
+      const { salesId, productId, quantity } = product;
+
+      await salesModel.insertSales(salesId, productId, quantity);
+    });
+  }());
+
   const resolve = {
     id: allSales[allSales.length - 1].id + 1,
     itemsSold: reqCopy,
