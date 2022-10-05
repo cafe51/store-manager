@@ -59,9 +59,19 @@ const insertSalesService = async (arrayOfProducts) => {
   return { type, message: resolve };
 };
 
+const deleteSalesService = async (id) => {
+  const result = await salesModel.getSalesByIdModel(id);
+  if (result.length === 0) {
+    return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Sale not found' };
+  }
+  await salesModel.deleteSalesModel(id);
+  return { type: null, message: '' };
+};
+
 module.exports = {
   insertSalesService,
   getAllSalesService,
   queryAllSalesWithProductsService,
   getSalesByIdService,
+  deleteSalesService,
 };
