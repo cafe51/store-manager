@@ -15,27 +15,72 @@ const {
   newSaleMockMissingQuantityPropertie,
   newSaleMockWrongQuantity,
   newSaleMockMissingProductIdInTheBank,
+  responseOfGetAllSalesWithProductsMock,
+  responseOfGetSalesByIdMock,
 } = require('../../mocks/sales.model.mock');
 
 
 describe('testando o GET da camada controller', function () {
-  afterEach(function () {
-    sinon.restore();
+  // beforeEach(async () => {
+  //   await sinon.stub(salesModel, 'queryAllSalesModel').resolves(salesListMock);
+  // });
+  afterEach(async () =>{
+    await sinon.restore();
   });
   it('retorna todas as vendas', async function () {
+    await sinon.stub(salesModel, 'queryAllSalesModel').resolves(salesListMock);
     const res = {};
     const req = {};
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon
-      .stub(salesService, 'getAllSalesService')
-      .resolves(salesListMock);
 
     await salesControler.getAllSalesController(req, res);
 
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(salesListMock);
+
+  });
+
+  it('retorna todas as vendas com produtos', async function () {
+    const res = {};
+    const req = {};
+    await sinon.stub(salesModel, 'queryAllSalesWithProductsModel').resolves(responseOfGetAllSalesWithProductsMock);
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await salesControler.queryAllSalesWithProductsController(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(responseOfGetAllSalesWithProductsMock);
+
+  });
+
+  it('retorna uma venda por id', async function () {
+    const res = {};
+    const req = { params: { id: 1 } };
+    await sinon.stub(salesModel, 'getSalesByIdModel').resolves(responseOfGetSalesByIdMock);
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await salesControler.getSalesByIdController(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(responseOfGetSalesByIdMock);
+
+  });
+
+  it('retorna erro quando é buscada uma venda por id quando não há o ID no banco', async function () {
+    const res = {};
+    const req = { params: { id: 99 } };
+    // await sinon.stub(salesModel, 'getSalesByIdModel').resolves(responseOfGetSalesByIdMock);
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    await salesControler.getSalesByIdController(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
 
   });
 

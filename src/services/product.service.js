@@ -25,7 +25,6 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => {
   const result = await productModel.queryProductById(id);
-  console.log('MESAAAAGE', result);
   if (!result) {
     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Product not found' };
   }

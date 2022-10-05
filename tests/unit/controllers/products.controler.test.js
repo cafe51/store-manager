@@ -68,12 +68,8 @@ describe('testando o INSERT do controler', function () {
 
     await sinon.stub(productModel, 'queryAllProducts').resolves([...productsMock, { id: 4, name: "Mascara do super-homem" }]);
 
-    // await sinon.stub(productService, 'getAllProducts').resolves(productsMock);
-
     const res = {};
     const req = { body: { name: "Mascara do super-homem" } };
-    
-    console.log('AAAAAAAAAAAAAAAA', productsMock)
     
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();

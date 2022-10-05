@@ -12,6 +12,8 @@ const {
   newSaleMockMissingQuantityPropertie,
   newSaleMockWrongQuantity,
   newSaleMockMissingProductIdInTheBank,
+  responseOfGetAllSalesWithProductsMock,
+  responseOfGetSalesByIdMock,
 } = require('../../mocks/sales.model.mock');
 
 describe('testando a o GET da camada service', function () {
@@ -24,6 +26,35 @@ describe('testando a o GET da camada service', function () {
     const result = await salesService.getAllSalesService();
 
     expect(result).to.equal(salesListMock);
+  });
+  it('retorna todas as vendas com produtos', async function () {
+    sinon.stub(salesModel, 'queryAllSalesWithProductsModel').resolves(responseOfGetAllSalesWithProductsMock);
+
+    const result = await salesService.queryAllSalesWithProductsService();
+
+    expect(result).to.equal(responseOfGetAllSalesWithProductsMock);
+  });
+  it('retorna uma venda por id', async function () {
+    // sinon.stub(salesModel, 'getSalesByIdModel').resolves(responseOfGetSalesByIdMock);
+
+    const result = await salesService.getSalesByIdService(1);
+
+    // const coisa = result.message[0].date
+
+    // console.log('RESUUUULT', result.message, 'MOOOOOOOOOOCK', responseOfGetSalesByIdMock);
+
+    expect(result.type).to.be.equal(null);
+    // expect(result.message).to.be.equal(responseOfGetSalesByIdMock);
+  });
+  it('retorna erro quando o ID não existe na busca por venda por ID', async function () {
+    // sinon.stub(salesModel, 'getSalesByIdModel').resolves(responseOfGetSalesByIdMock);
+
+    const result = await salesService.getSalesByIdService(42);
+
+
+
+    expect(result.type).to.be.equal(404);
+    expect(result.message).to.be.deep.equal('Sale not found');
   });
 });
 
@@ -41,8 +72,6 @@ describe('testando o INSERT do service', function () {
     await sinon.stub(salesModel, 'queryAllSalesModel').resolves(salesListMock);
     const result = await salesService.insertSalesService(newSaleMock);
     expect(result.type).to.equal(null);
-    // console.log('LISTA MOCKADA', saleResponseControllerMock);
-    // console.log('LISTA RETORNADA', result.message);
     expect(result.message).to.be.deep.equal(saleResponseControllerMock);
   });
 

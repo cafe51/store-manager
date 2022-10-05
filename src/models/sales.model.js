@@ -16,6 +16,7 @@ const queryAllSalesWithProductsModel = async () => {
     ON sale_products.sale_id = sales.id
     ORDER BY sale_id, product_id`,
   );
+  // console.log('RESULTADO', result);
   return camelize(result);
 };
 

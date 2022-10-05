@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const { salesModel} = require('../../../src/models');
 
-const { salesListMock, newSaleMock } = require('../../mocks/sales.model.mock');
+const { salesListMock, newSaleMock, responseOfGetAllSalesWithProductsMock, responseOfGetSalesByIdMock } = require('../../mocks/sales.model.mock');
 
 describe('testando o SELECT do model', function () {
   afterEach(function () {
@@ -16,6 +16,23 @@ describe('testando o SELECT do model', function () {
     const result = await salesModel.queryAllSalesModel();
 
     expect(result).to.deep.equal(salesListMock);
+  });
+
+
+  it('retorna todas as vendas com produtos', async function () {
+    sinon.stub(connection, 'execute').resolves([responseOfGetAllSalesWithProductsMock]);
+
+    const result = await salesModel.queryAllSalesWithProductsModel();
+    
+    expect(result).to.deep.equal(responseOfGetAllSalesWithProductsMock);
+  });
+
+  it('retorna uma venda por id', async function () {
+    sinon.stub(connection, 'execute').resolves([responseOfGetSalesByIdMock]);
+
+    const result = await salesModel.getSalesByIdModel(1);
+
+    expect(result).to.deep.equal(responseOfGetSalesByIdMock);
   });
 
 });
