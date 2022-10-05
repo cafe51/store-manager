@@ -3,25 +3,9 @@ const errorMap = require('../utils/errorMap');
 const { validateInputProduct } = require('./validations.product');
 
 const getAllProducts = async () => {
-  // try {
-  //   const result = await productModel.getAllProducts();
-  //   return { type: null, message: result };
-  // } catch (error) {
-  //   return { type: 'Erro no product.service', message: error.message };
-  // }
-
   const result = await productModel.queryAllProducts();
-  // return { type: null, message: result };
   return result;
 };
-
-// const getProductById = async (id) => {
-//   const result = await productModel.queryProductById(id);
-//     if (result.length === 0) {
-//     return { type: errorMap.mapError('PRODUCT_NOT_FOUND'), message: 'Product not found' };
-//   }
-//   return { type: null, message: result[0] };
-// };
 
 const getProductById = async (id) => {
   const result = await productModel.queryProductById(id);
@@ -32,7 +16,6 @@ const getProductById = async (id) => {
 };
 
 const insertProductService = async (obj) => {
-  // const allProducts = await productModel.queryAllProducts();
   const { type, message } = validateInputProduct(obj);
   if (type) return { type, message };
   await productModel.insertProductModel(obj);
@@ -41,8 +24,22 @@ const insertProductService = async (obj) => {
   return { type, message: lastProduct };
 };
 
+const updateProductService = async (id, obj) => {
+  const objClone = JSON.parse(JSON.stringify(obj));
+  objClone.id = id;
+  const { type: type2, message: message2 } = await getProductById(id);
+  if (type2) return { type: type2, message: message2 };
+
+  const { type, message } = validateInputProduct(obj);
+  if (type) return { type, message };
+  
+  await productModel.updateProductModel(id, obj);
+  return { type, message: objClone };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   insertProductService,
+  updateProductService,
 };
