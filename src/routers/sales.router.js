@@ -6,12 +6,12 @@ const {
 
 const router = express.Router();
 
-router.get('/', salesControler.getAllSalesController);
+router.get('/date', salesControler.getAllSalesController);
 
-// router.get('/', salesControler.queryAllSalesWithProductsController);
+router.get('/', salesControler.queryAllSalesWithProductsController);
 
 router.post('/', salesControler.insertSalesController);
 
-// router.get('/:id', salesControler.getSalesByIdController);
+router.get('/:id', salesControler.getSalesByIdController);
 
 module.exports = router;
